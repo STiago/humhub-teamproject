@@ -1,0 +1,62 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: humhub
+  labels:
+    app: web
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+        - name: humhub
+          image: mriedmann/humhub:stable
+          ports:
+            - containerPort: 80
+          volumeMounts:
+          - mountPath: "/var/www/localhost/htdocs/protected/config"
+            name: config
+          - mountPath: "/var/www/localhost/htdocs/protected/uploads"
+            name: uploads
+          - mountPath: "/var/www/localhost/htdocs/protected/modules"
+            name: modules
+        - name: db
+          image: mariadb:10.4
+          volumeMounts:
+          - mountPath: "/etc/mysql"
+            name: mysql
+          env:
+          - name: MYSQL_ROOT_PASSWORD
+            value: "root"
+          - name: MYSQL_DATABASE
+            value: "humhub"
+          - name: MYSQL_USER
+            value: "humhub"
+          - name: MYSQL_PASSWORD
+            value: "humhub"
+          ports:
+            - containerPort: 3306
+      volumes:
+      - name: config
+        hostPath:
+          path: /var
+          type: Directory
+      - name: uploads
+        hostPath:
+          path: /var
+          type: Directory
+      - name: modules
+        hostPath:
+          path: /var
+          type: Directory
+      - name: mysql
+        hostPath:
+          path: /var
+          type: Directory
