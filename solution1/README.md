@@ -44,4 +44,4 @@ The image generated was uploaded to the personal respository "stiago/dummy-humhu
 
 Link: https://hub.docker.com/repository/docker/stiago/dummy-humhub
 
-![Humhub](https://github.com/STiago/Pictures/tree/master/humhub/dummy_humhub_dockerhub.png)
+![Humhub](https://github.com/STiago/Pictures/blob/master/humhub/dummy_humhub_dockerhub.png)
