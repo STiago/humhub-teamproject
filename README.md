@@ -1,5 +1,5 @@
 # humhub-teamproject
-====================
+
 
 Deployment of a containerized application with Docker
 
@@ -14,17 +14,29 @@ One solution developed with Kubernetes.
 ## Project structure
 
 humhub-teamproject
+
    README.md
+   
    solution1
+   
       Dockerfile
+      
       docker-compose.yml
+      
       entrypoint.sh
+      
       README.md
+      
    solution2
+   
       docker-compose.yml
+      
       README.md
+      
    solution3
+   
       humhub-deployment.yaml
+      
       README.md
 
 ## Requirements
@@ -54,9 +66,9 @@ humhub-teamproject
 
 ## Permisions docker running no-root
 
-``sudo chown "$USER":"$USER" /home/"$USER"/.docker -R
-sudo chmod g+rwx "$HOME/.docker" -R
-sudo systemctl restart docker ```
+$ sudo chown "$USER":"$USER" /home/"$USER"/.docker -R
+$ sudo chmod g+rwx "$HOME/.docker" -R
+$ sudo systemctl restart docker 
 
 For more information please visit the following page: https://docs.docker.com/engine/security/rootless/
 
