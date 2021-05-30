@@ -1,0 +1,39 @@
+version: '3.1'
+services:
+  humhub:
+    image: stiago/dummy-humhub
+    ports:
+      - "8080:80"
+    links:
+      - "db:db"
+    environment:
+      HUMHUB_DB_USER: humhub
+      HUMHUB_DB_PASSWORD: humhub
+    volumes:
+      - "config:/var/www/localhost/htdocs/protected/config"
+      - "uploads:/var/www/localhost/htdocs/uploads"
+      - "modules:/var/www/localhost/htdocs/protected/modules"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+  db:
+    image: mariadb:10.4
+    volumes: 
+      - "mariadb:/etc/mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: humhub
+      MYSQL_USER: humhub
+      MYSQL_PASSWORD: humhub
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "--silent"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+volumes:
+  config: {}
+  uploads: {}
+  modules: {}
+  mariadb: {}  

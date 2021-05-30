@@ -1,0 +1,16 @@
+#!/bin/sh
+set -e
+HUMHUB_DB_NAME=${HUMHUB_DB_NAME:-"humhub"}
+HUMHUB_DB_HOST=${HUMHUB_DB_HOST:-"db"}
+HUMHUB_DB_PORT=${HUMHUB_DB_PORT:-3306}
+HUMHUB_NAME=${HUMHUB_NAME:-"HumHub"}
+HUMHUB_EMAIL=${HUMHUB_EMAIL:-"humhub@example.com"}
+HUMHUB_LANG=${HUMHUB_LANG:-"en-US"}
+HUMHUB_DEBUG=${HUMHUB_DEBUG:-"false"}
+
+HUMHUB_ADMIN_LOGIN=${HUMHUB_ADMIN_LOGIN:-"admin"}
+HUMHUB_ADMIN_EMAIL=${HUMHUB_ADMIN_EMAIL:-${HUMHUB_EMAIL}}
+HUMHUB_ADMIN_PASSWORD=${HUMHUB_ADMIN_PASSWORD:-"test"}
+
+
+## Setup configuration for php, permissions, create database, nginx...
