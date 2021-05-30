@@ -1,7 +1,7 @@
 # humhub-teamproject
 
 
-Deployment of a containerized application with Docker
+Deployment of a containerized application with Docker and Kubernetes.
 
 The purpose of this project is automate the deployment of a containerized application with Docker and Kubernetes.
 Two solutions have been developed with Docker:
@@ -49,7 +49,7 @@ humhub-teamproject
 
 ### System requirements
 1. Before running this service or its tests:
-     - Ensure you have installed the following packages: docker, docker-compose
+     - Ensure you have installed the following packages: docker, docker-compose, kubernetes.
 
 	 1.1. Install Docker
 
@@ -67,7 +67,9 @@ humhub-teamproject
 ## Permisions docker running no-root
 
 $ sudo chown "$USER":"$USER" /home/"$USER"/.docker -R
+
 $ sudo chmod g+rwx "$HOME/.docker" -R
+
 $ sudo systemctl restart docker 
 
 For more information please visit the following page: https://docs.docker.com/engine/security/rootless/
@@ -111,7 +113,7 @@ You should get an output similar to the following screenshoot:
 ![Humhub](https://github.com/STiago/Pictures/blob/master/humhub/output_dockerfile_s1.png)
 
 
-Docker compose up will display a failure when it genates the container humhub due to this image needs to be updated.
+Docker compose up will display a failure when it generates the container humhub because this image needs to be updated.
 
 
 #### Image in dockerhub
@@ -150,9 +152,13 @@ Deployment with Kubernetes.
 The main commands to use for creating, removing and checking the status of the deployment are the following commands:
 
 $ kubectl apply -f humhub-deployment.yaml
+
 $ kubectl delete deployment humhub
+
 $ kubectl get pods
+
 $ kubectl describe pod humhub-8565d97c88-h9fqm
+
 $ kubectl get deployments 
 
 
