@@ -1,5 +1,4 @@
 # Solution 3 - Kubernetes 
-=========================
 
 Deployment with Kubernetes.
 
