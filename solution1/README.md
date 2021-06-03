@@ -14,7 +14,7 @@ This repository contains 3 files:
 - docker-compose.yml
 - entrypoint.sh
 
-Dockerfile and entrypoint.sh need more updates (mainly nginx and database configurations).
+Dockerfile and entrypoint.sh need more updates (mainly fix the issue with yii, nginx and more database configurations).
 
 ## Steps to build the container:
 
@@ -35,7 +35,7 @@ You should get an output similar to the following screenshoot:
 ![Humhub](https://github.com/STiago/Pictures/blob/master/humhub/output_dockerfile_s1.png)
 
 
-Docker compose up will display a failure when it genates the container humhub due to this image needs to be updated.
+Docker compose up will display a failure when it genates the container humhub due to this image needs to be updated in the future.
 
 
 ## Image in dockerhub

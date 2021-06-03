@@ -31,8 +31,6 @@ if [ "$HUMHUB_AUTO_INSTALL" != "false" ]; then
     #php yii installer/write-site-config "$HUMHUB_NAME" "$HUMHUB_EMAIL"	
     #php yii installer/create-admin-account "${HUMHUB_ADMIN_LOGIN}" "${HUMHUB_ADMIN_EMAIL}" "${HUMHUB_ADMIN_PASSWORD}"
 
-    #chown -R nginx:nginx /var/www/localhost/htdocs/protected/runtime
-    #chown nginx:nginx /var/www/localhost/htdocs/protected/config/dynamic.php
     echo "Done."
 fi
 

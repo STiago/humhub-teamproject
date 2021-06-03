@@ -1,8 +1,7 @@
 version: '3.1'
 services:
   humhub:
-    image: myima:latest
-    #stiago/dummy-humhub:latest
+    image: stiago/dummy-humhub:latest
     ports:
       - "8080:80"
     links:

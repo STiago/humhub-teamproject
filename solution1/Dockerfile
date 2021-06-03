@@ -1,5 +1,5 @@
 FROM webdevops/php-nginx:7.4
-#onerpm/ubuntu-nginx-php7
+
 MAINTAINER Victoria Santiago <victoriasantiagoalcala@gmail.com>
 
 # Update ubuntu software repository
@@ -40,8 +40,6 @@ CMD ["nginx", "-c", "/etc/nginx/nginx.conf"]
 
 WORKDIR /usr/src/humhub
 
-#RUN cd /var/www/ && mkdir localhost
-#RUN cp -r . /var/www/localhost/htdocs/
 
 # Volumes
 RUN mkdir -p /usr/src/humhub/protected/config/ && \
@@ -52,16 +50,8 @@ RUN mkdir -p /usr/src/humhub/protected/config/ && \
 VOLUME /var/www/localhost/htdocs/uploads
 VOLUME /var/www/localhost/htdocs/protected/config
 VOLUME /var/www/localhost/htdocs/protected/modules
-#RUN mkdir -p /usr/src/humhub/protected/config/ && \
-#    cp -R /var/www/humhub/protected/config/* /usr/src/humhub/protected/config/ && \
-#    rm -f var/www/humhub/protected/config/common.php /usr/src/humhub/protected/config/common.php && \
-#    echo "1.8.2" >  /usr/src/humhub/.version
- 
-#VOLUME /var/www/humhub/uploads
-#VOLUME /var/www/humhub/protected/config
-#VOLUME /var/www/humhub/protected/modules
 
-# Pending to update this configuration  
+# Pending to update this configuration 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod 600 /etc/nginx && \
     chmod 777 /entrypoint.sh  
