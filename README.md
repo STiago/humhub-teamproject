@@ -1,4 +1,4 @@
-# humhub-teamproject
+# Humhub-teamproject
 
 
 Deployment of a containerized application with Docker and Kubernetes.
@@ -6,10 +6,14 @@ Deployment of a containerized application with Docker and Kubernetes.
 The purpose of this project is automate the deployment of a containerized application with Docker and Kubernetes.
 Two solutions have been developed with Docker:
 
-1. Docker image created from a customized Dockerfile + Docker-compose.yml file.
-2. Docker-compose running an existing image from dockerhub.
+- SOLUTION 1: Docker image created from a customized Dockerfile + Docker-compose.yml file.
+- SOLUTION 2: Docker-compose running an existing image from dockerhub.
 
-One solution developed with Kubernetes.
+Two solutions developed with Kubernetes.
+
+- SOLUTION 3: Sidecar pattern.
+- SOLUTION 4: Ambassador pattern.
+
 
 ## Project structure
 
@@ -38,6 +42,24 @@ humhub-teamproject
       humhub-deployment.yaml
       
       README.md
+      
+   solution4
+   
+      database_deployment.yaml
+      
+      humhub_deployment.yaml
+      
+      database_service.yaml
+      
+      humhub_service.yaml
+      
+      Dockerfile
+      
+      nginx.conf
+      
+      README.md
+
+      
 
 ## Requirements
 
@@ -77,7 +99,7 @@ For more information please visit the following page: https://docs.docker.com/en
 ## Solutions 
 
 ### Solution 1. Container created with customized Dockerfile 
-===========================================================
+
 
 Dockerfile customized using webdevops/php-nginx:7.4 .
 
@@ -92,7 +114,7 @@ This repository contains 3 files:
 - docker-compose.yml
 - entrypoint.sh
 
-Dockerfile and entrypoint.sh need more updates (mainly nginx and database configurations).
+Dockerfile and entrypoint.sh have been re-configured but there is an issue with yii which needs to be fixed before continue the configuration of database.
 
 #### Steps to build the container:
 
@@ -131,7 +153,20 @@ Link: https://hub.docker.com/repository/docker/stiago/dummy-humhub
 
 Build a container from an existing and customized image.
 From dockerhub https://hub.docker.com/r/mriedmann/humhub
-Dockerfile with requirements: https://github.com/mriedmann/humhub-docker/blob/master/Dockerfile
+
+
+#### Application already configured with a database. 
+
+We just need to setup the next environment variables if we want to run the app with a database already configured and ready to be used from the browser.
+
+Just need to setup the following environment variables:
+
+```
+      HUMHUB_AUTO_INSTALL: 1
+      HUMHUB_ADMIN_LOGIN: admin
+      HUMHUB_ADMIN_EMAIL: admin@example.com
+      HUMHUB_ADMIN_PASSWORD: admin
+```
 
 #### Steps to build the container:
 
@@ -145,7 +180,7 @@ The console should display the following output:
 
 
 
-### Solution 3. Kubernetes
+### Solution 3. Kubernetes - Sidecar pattern
 
 Deployment with Kubernetes.
 
@@ -168,6 +203,86 @@ For the deployments you just need to run the command `kubectl apply -f humhub-de
 
 ![Describe_pod](https://github.com/STiago/Pictures/blob/master/humhub/describe_pods.png)
 
+
+
+### Solution 4. Kubernetes - Ambassador pattern
+
+Ambassador is used as a proxy between the application container and one or more outside services. In our case it is between Humhub app and MariaDB.
+
+
+![Ambassador_pattern](https://github.com/STiago/Pictures/blob/master/humhub/ambassador-pattern.png)
+
+
+
+#### Files developed for this solution:
+
+Into the folder /solution4 you can find the following files:
+
+- Dockerfile: fon nginx ambassador container
+- nginx.conf: configuration for nginx - mariadb
+- humhub_deployment.yaml: Deployment for humhub&ambassador
+- humhub_service.yaml: service.
+- database_deployment.yaml: MariaDB's deployment
+- database_service.yaml: service.
+
+
+#### Running the solution step by step
+
+##### 0. Generate nginx-ambassador.
+
+This image was uploaded to dockerhub: https://hub.docker.com/repository/docker/stiago/nginx-ambassador
+If you want to generate this image you need nginx.conf provided in this repository then run Dockerfile using the command: `docker build --no-cache -t nginx-ambassador . `
+
+
+##### 1. MariaDB deployment.
+
+Commands:
+
+`kubectl apply -f database_deployment.yaml`
+
+then you should be able to check the deployment and the corresponding pods created:
+
+
+![Check_database_deployment_pod](https://github.com/STiago/Pictures/blob/master/humhub/db_deployment.png)
+
+
+Next step is run the service executing: 
+
+`kubectl expose deployment/database` or `kubectl apply -f database_service.yaml `
+
+`kubectl get svc database`
+
+`kubectl describe svc database`
+
+`kubectl get ep database ` 
+ 
+ 
+![Expose_service](https://github.com/STiago/Pictures/blob/master/humhub/deployment-database-service.png)
+
+
+
+##### 2. Humhub (Humhumb + Nginx)
+
+We will continue with this deployment executing:
+
+`kubectl apply -f humhub_deployment.yaml`
+
+The next pictures displays all the deployments that we currently have and the pods, we can see that both are ready and the pods are running.
+
+![all_deployments](https://github.com/STiago/Pictures/blob/master/humhub/all-deployments.png)
+
+
+![all_pods](https://github.com/STiago/Pictures/blob/master/humhub/get-pods.png)
+
+
+Now we will run the service using the same commands that we executed before when we exposed the database's service:
+
+
+![Expose_humhub_service](https://github.com/STiago/Pictures/blob/master/humhub/humhub-service.png)
+
+
+
+
 ## Most challenging areas and improves pending
 
 The configuration of the Dockerfile for the Solution 1 has been the most challenging part, it was not finished yet.
@@ -175,9 +290,7 @@ The configuration of the Dockerfile for the Solution 1 has been the most challen
 Improvements for docker-compose.yml and humhub-deployment.yaml files related with the credentials assignation (for instance using Secrets: https://kubernetes.io/docs/concepts/configuration/secret/) also volumes could use nfs instead of HostPath (https://kubernetes.io/docs/concepts/storage/volumes/). 
 
 
-## Endpoint
-
-http://localhost:8080/installer/index
+## Humhub site
 
 
 ![Humhub](https://github.com/STiago/Pictures/blob/master/humhub/humhub_final_view.png)
