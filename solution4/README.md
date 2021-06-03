@@ -7,7 +7,7 @@ Deployment using Ambassador pattern.
 
 
 
-### Files:
+## Files:
 
 Into the folder /solution4 you can find the following files:
 
@@ -18,14 +18,14 @@ Into the folder /solution4 you can find the following files:
 - database_deployment.yaml: MariaDB's deployment
 - database_service.yaml: service.
 
-### Running the solution step by step
+## Running the solution step by step
 
-0. Generate nginx-ambassador.
+### 0. Generate nginx-ambassador.
 
 This image was uploaded to dockerhub: https://hub.docker.com/repository/docker/stiago/nginx-ambassador
 If you want to generate this image you need nginx.conf provided in this repository then run Dockerfile using the command: `docker build --no-cache -t nginx-ambassador . `
 
-1. MariaDB deployment.
+### 1. MariaDB deployment.
 
 Commands:
 
@@ -52,7 +52,7 @@ Next step is run the service executing:
 
 
 
-2. Humhub (Humhumb + Nginx)
+### 2. Humhub (Humhumb + Nginx)
 
 We will continue with this deployment executing:
 
@@ -71,6 +71,5 @@ Now we will run the service using the same commands that we executed before when
 
 ![Expose_humhub_service](https://github.com/STiago/Pictures/blob/master/humhub/humhub-service.png)
 
-![]()
 
 
